@@ -1,0 +1,18 @@
+{
+  "name": "graphql-example",
+  "version": "1.0.0",
+  "description": "GraphQL Example",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leegeunhyeok/graphql-example.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leegeunhyeok/graphql-example/issues"
+  },
+  "homepage": "https://github.com/leegeunhyeok/graphql-example#readme"
+}
