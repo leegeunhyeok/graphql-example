@@ -1,0 +1,24 @@
+type Query {
+  user(id: ID!): user,
+  userTodo(id: ID!): [todo!]!
+}
+
+type Mutation {
+  signupUser(username: String!, password: String!, name: String!, email: String!): user!
+  addTodo(content: String!, authorId: ID!): todo!
+}
+
+type todo {
+  id: ID!
+  content: String!
+  author: user!
+}
+
+type user {
+  id: ID!
+  username: String!
+  password: String!
+  name: String
+  email: String!
+  todos: [todo!]!
+}
