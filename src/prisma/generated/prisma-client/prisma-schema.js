@@ -3,15 +3,7 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateNote {
-  count: Int!
-}
-
-type AggregateTag {
-  count: Int!
-}
-
-type AggregateTodo {
+/* GraphQL */ `type AggregateTodo {
   count: Int!
 }
 
@@ -28,18 +20,6 @@ scalar DateTime
 scalar Long
 
 type Mutation {
-  createNote(data: NoteCreateInput!): Note!
-  updateNote(data: NoteUpdateInput!, where: NoteWhereUniqueInput!): Note
-  updateManyNotes(data: NoteUpdateManyMutationInput!, where: NoteWhereInput): BatchPayload!
-  upsertNote(where: NoteWhereUniqueInput!, create: NoteCreateInput!, update: NoteUpdateInput!): Note!
-  deleteNote(where: NoteWhereUniqueInput!): Note
-  deleteManyNotes(where: NoteWhereInput): BatchPayload!
-  createTag(data: TagCreateInput!): Tag!
-  updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
-  updateManyTags(data: TagUpdateManyMutationInput!, where: TagWhereInput): BatchPayload!
-  upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
-  deleteTag(where: TagWhereUniqueInput!): Tag
-  deleteManyTags(where: TagWhereInput): BatchPayload!
   createTodo(data: TodoCreateInput!): Todo!
   updateTodo(data: TodoUpdateInput!, where: TodoWhereUniqueInput!): Todo
   updateManyTodoes(data: TodoUpdateManyMutationInput!, where: TodoWhereInput): BatchPayload!
@@ -64,275 +44,6 @@ interface Node {
   id: ID!
 }
 
-type Note {
-  id: ID!
-  title: String!
-  content: String!
-  author: User!
-  publish: Boolean!
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
-type NoteConnection {
-  pageInfo: PageInfo!
-  edges: [NoteEdge]!
-  aggregate: AggregateNote!
-}
-
-input NoteCreateInput {
-  id: ID
-  title: String!
-  content: String!
-  author: UserCreateOneWithoutNotesInput!
-  publish: Boolean
-}
-
-input NoteCreateManyWithoutAuthorInput {
-  create: [NoteCreateWithoutAuthorInput!]
-  connect: [NoteWhereUniqueInput!]
-}
-
-input NoteCreateWithoutAuthorInput {
-  id: ID
-  title: String!
-  content: String!
-  publish: Boolean
-}
-
-type NoteEdge {
-  node: Note!
-  cursor: String!
-}
-
-enum NoteOrderByInput {
-  id_ASC
-  id_DESC
-  title_ASC
-  title_DESC
-  content_ASC
-  content_DESC
-  publish_ASC
-  publish_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type NotePreviousValues {
-  id: ID!
-  title: String!
-  content: String!
-  publish: Boolean!
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
-input NoteScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  content: String
-  content_not: String
-  content_in: [String!]
-  content_not_in: [String!]
-  content_lt: String
-  content_lte: String
-  content_gt: String
-  content_gte: String
-  content_contains: String
-  content_not_contains: String
-  content_starts_with: String
-  content_not_starts_with: String
-  content_ends_with: String
-  content_not_ends_with: String
-  publish: Boolean
-  publish_not: Boolean
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  AND: [NoteScalarWhereInput!]
-  OR: [NoteScalarWhereInput!]
-  NOT: [NoteScalarWhereInput!]
-}
-
-type NoteSubscriptionPayload {
-  mutation: MutationType!
-  node: Note
-  updatedFields: [String!]
-  previousValues: NotePreviousValues
-}
-
-input NoteSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: NoteWhereInput
-  AND: [NoteSubscriptionWhereInput!]
-}
-
-input NoteUpdateInput {
-  title: String
-  content: String
-  author: UserUpdateOneRequiredWithoutNotesInput
-  publish: Boolean
-}
-
-input NoteUpdateManyDataInput {
-  title: String
-  content: String
-  publish: Boolean
-}
-
-input NoteUpdateManyMutationInput {
-  title: String
-  content: String
-  publish: Boolean
-}
-
-input NoteUpdateManyWithoutAuthorInput {
-  create: [NoteCreateWithoutAuthorInput!]
-  delete: [NoteWhereUniqueInput!]
-  connect: [NoteWhereUniqueInput!]
-  set: [NoteWhereUniqueInput!]
-  disconnect: [NoteWhereUniqueInput!]
-  update: [NoteUpdateWithWhereUniqueWithoutAuthorInput!]
-  upsert: [NoteUpsertWithWhereUniqueWithoutAuthorInput!]
-  deleteMany: [NoteScalarWhereInput!]
-  updateMany: [NoteUpdateManyWithWhereNestedInput!]
-}
-
-input NoteUpdateManyWithWhereNestedInput {
-  where: NoteScalarWhereInput!
-  data: NoteUpdateManyDataInput!
-}
-
-input NoteUpdateWithoutAuthorDataInput {
-  title: String
-  content: String
-  publish: Boolean
-}
-
-input NoteUpdateWithWhereUniqueWithoutAuthorInput {
-  where: NoteWhereUniqueInput!
-  data: NoteUpdateWithoutAuthorDataInput!
-}
-
-input NoteUpsertWithWhereUniqueWithoutAuthorInput {
-  where: NoteWhereUniqueInput!
-  update: NoteUpdateWithoutAuthorDataInput!
-  create: NoteCreateWithoutAuthorInput!
-}
-
-input NoteWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  content: String
-  content_not: String
-  content_in: [String!]
-  content_not_in: [String!]
-  content_lt: String
-  content_lte: String
-  content_gt: String
-  content_gte: String
-  content_contains: String
-  content_not_contains: String
-  content_starts_with: String
-  content_not_starts_with: String
-  content_ends_with: String
-  content_not_ends_with: String
-  author: UserWhereInput
-  publish: Boolean
-  publish_not: Boolean
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  AND: [NoteWhereInput!]
-}
-
-input NoteWhereUniqueInput {
-  id: ID
-}
-
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -347,12 +58,6 @@ enum Permission {
 }
 
 type Query {
-  note(where: NoteWhereUniqueInput!): Note
-  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note]!
-  notesConnection(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NoteConnection!
-  tag(where: TagWhereUniqueInput!): Tag
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
-  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
   todo(where: TodoWhereUniqueInput!): Todo
   todoes(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Todo]!
   todoesConnection(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TodoConnection!
@@ -363,310 +68,14 @@ type Query {
 }
 
 type Subscription {
-  note(where: NoteSubscriptionWhereInput): NoteSubscriptionPayload
-  tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   todo(where: TodoSubscriptionWhereInput): TodoSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-}
-
-type Tag {
-  id: ID!
-  name: String!
-  color: String!
-  user: User!
-  todos(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Todo!]
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
-type TagConnection {
-  pageInfo: PageInfo!
-  edges: [TagEdge]!
-  aggregate: AggregateTag!
-}
-
-input TagCreateInput {
-  id: ID
-  name: String!
-  color: String!
-  user: UserCreateOneWithoutTagsInput!
-  todos: TodoCreateManyWithoutTagInput
-}
-
-input TagCreateManyWithoutUserInput {
-  create: [TagCreateWithoutUserInput!]
-  connect: [TagWhereUniqueInput!]
-}
-
-input TagCreateOneWithoutTodosInput {
-  create: TagCreateWithoutTodosInput
-  connect: TagWhereUniqueInput
-}
-
-input TagCreateWithoutTodosInput {
-  id: ID
-  name: String!
-  color: String!
-  user: UserCreateOneWithoutTagsInput!
-}
-
-input TagCreateWithoutUserInput {
-  id: ID
-  name: String!
-  color: String!
-  todos: TodoCreateManyWithoutTagInput
-}
-
-type TagEdge {
-  node: Tag!
-  cursor: String!
-}
-
-enum TagOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  color_ASC
-  color_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type TagPreviousValues {
-  id: ID!
-  name: String!
-  color: String!
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
-input TagScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  color: String
-  color_not: String
-  color_in: [String!]
-  color_not_in: [String!]
-  color_lt: String
-  color_lte: String
-  color_gt: String
-  color_gte: String
-  color_contains: String
-  color_not_contains: String
-  color_starts_with: String
-  color_not_starts_with: String
-  color_ends_with: String
-  color_not_ends_with: String
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  AND: [TagScalarWhereInput!]
-  OR: [TagScalarWhereInput!]
-  NOT: [TagScalarWhereInput!]
-}
-
-type TagSubscriptionPayload {
-  mutation: MutationType!
-  node: Tag
-  updatedFields: [String!]
-  previousValues: TagPreviousValues
-}
-
-input TagSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: TagWhereInput
-  AND: [TagSubscriptionWhereInput!]
-}
-
-input TagUpdateInput {
-  name: String
-  color: String
-  user: UserUpdateOneRequiredWithoutTagsInput
-  todos: TodoUpdateManyWithoutTagInput
-}
-
-input TagUpdateManyDataInput {
-  name: String
-  color: String
-}
-
-input TagUpdateManyMutationInput {
-  name: String
-  color: String
-}
-
-input TagUpdateManyWithoutUserInput {
-  create: [TagCreateWithoutUserInput!]
-  delete: [TagWhereUniqueInput!]
-  connect: [TagWhereUniqueInput!]
-  set: [TagWhereUniqueInput!]
-  disconnect: [TagWhereUniqueInput!]
-  update: [TagUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [TagUpsertWithWhereUniqueWithoutUserInput!]
-  deleteMany: [TagScalarWhereInput!]
-  updateMany: [TagUpdateManyWithWhereNestedInput!]
-}
-
-input TagUpdateManyWithWhereNestedInput {
-  where: TagScalarWhereInput!
-  data: TagUpdateManyDataInput!
-}
-
-input TagUpdateOneWithoutTodosInput {
-  create: TagCreateWithoutTodosInput
-  update: TagUpdateWithoutTodosDataInput
-  upsert: TagUpsertWithoutTodosInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: TagWhereUniqueInput
-}
-
-input TagUpdateWithoutTodosDataInput {
-  name: String
-  color: String
-  user: UserUpdateOneRequiredWithoutTagsInput
-}
-
-input TagUpdateWithoutUserDataInput {
-  name: String
-  color: String
-  todos: TodoUpdateManyWithoutTagInput
-}
-
-input TagUpdateWithWhereUniqueWithoutUserInput {
-  where: TagWhereUniqueInput!
-  data: TagUpdateWithoutUserDataInput!
-}
-
-input TagUpsertWithoutTodosInput {
-  update: TagUpdateWithoutTodosDataInput!
-  create: TagCreateWithoutTodosInput!
-}
-
-input TagUpsertWithWhereUniqueWithoutUserInput {
-  where: TagWhereUniqueInput!
-  update: TagUpdateWithoutUserDataInput!
-  create: TagCreateWithoutUserInput!
-}
-
-input TagWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  color: String
-  color_not: String
-  color_in: [String!]
-  color_not_in: [String!]
-  color_lt: String
-  color_lte: String
-  color_gt: String
-  color_gte: String
-  color_contains: String
-  color_not_contains: String
-  color_starts_with: String
-  color_not_starts_with: String
-  color_ends_with: String
-  color_not_ends_with: String
-  user: UserWhereInput
-  todos_some: TodoWhereInput
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  AND: [TagWhereInput!]
-}
-
-input TagWhereUniqueInput {
-  id: ID
 }
 
 type Todo {
   id: ID!
   content: String!
-  tag: Tag
-  author: User!
+  user: User!
   createdAt: DateTime!
   updatedAt: DateTime
 }
@@ -680,30 +89,17 @@ type TodoConnection {
 input TodoCreateInput {
   id: ID
   content: String!
-  tag: TagCreateOneWithoutTodosInput
-  author: UserCreateOneWithoutTodosInput!
+  user: UserCreateOneWithoutTodosInput!
 }
 
-input TodoCreateManyWithoutAuthorInput {
-  create: [TodoCreateWithoutAuthorInput!]
+input TodoCreateManyWithoutUserInput {
+  create: [TodoCreateWithoutUserInput!]
   connect: [TodoWhereUniqueInput!]
 }
 
-input TodoCreateManyWithoutTagInput {
-  create: [TodoCreateWithoutTagInput!]
-  connect: [TodoWhereUniqueInput!]
-}
-
-input TodoCreateWithoutAuthorInput {
+input TodoCreateWithoutUserInput {
   id: ID
   content: String!
-  tag: TagCreateOneWithoutTodosInput
-}
-
-input TodoCreateWithoutTagInput {
-  id: ID
-  content: String!
-  author: UserCreateOneWithoutTodosInput!
 }
 
 type TodoEdge {
@@ -797,8 +193,7 @@ input TodoSubscriptionWhereInput {
 
 input TodoUpdateInput {
   content: String
-  tag: TagUpdateOneWithoutTodosInput
-  author: UserUpdateOneRequiredWithoutTodosInput
+  user: UserUpdateOneRequiredWithoutTodosInput
 }
 
 input TodoUpdateManyDataInput {
@@ -809,26 +204,14 @@ input TodoUpdateManyMutationInput {
   content: String
 }
 
-input TodoUpdateManyWithoutAuthorInput {
-  create: [TodoCreateWithoutAuthorInput!]
+input TodoUpdateManyWithoutUserInput {
+  create: [TodoCreateWithoutUserInput!]
   delete: [TodoWhereUniqueInput!]
   connect: [TodoWhereUniqueInput!]
   set: [TodoWhereUniqueInput!]
   disconnect: [TodoWhereUniqueInput!]
-  update: [TodoUpdateWithWhereUniqueWithoutAuthorInput!]
-  upsert: [TodoUpsertWithWhereUniqueWithoutAuthorInput!]
-  deleteMany: [TodoScalarWhereInput!]
-  updateMany: [TodoUpdateManyWithWhereNestedInput!]
-}
-
-input TodoUpdateManyWithoutTagInput {
-  create: [TodoCreateWithoutTagInput!]
-  delete: [TodoWhereUniqueInput!]
-  connect: [TodoWhereUniqueInput!]
-  set: [TodoWhereUniqueInput!]
-  disconnect: [TodoWhereUniqueInput!]
-  update: [TodoUpdateWithWhereUniqueWithoutTagInput!]
-  upsert: [TodoUpsertWithWhereUniqueWithoutTagInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutUserInput!]
   deleteMany: [TodoScalarWhereInput!]
   updateMany: [TodoUpdateManyWithWhereNestedInput!]
 }
@@ -838,36 +221,19 @@ input TodoUpdateManyWithWhereNestedInput {
   data: TodoUpdateManyDataInput!
 }
 
-input TodoUpdateWithoutAuthorDataInput {
+input TodoUpdateWithoutUserDataInput {
   content: String
-  tag: TagUpdateOneWithoutTodosInput
 }
 
-input TodoUpdateWithoutTagDataInput {
-  content: String
-  author: UserUpdateOneRequiredWithoutTodosInput
-}
-
-input TodoUpdateWithWhereUniqueWithoutAuthorInput {
+input TodoUpdateWithWhereUniqueWithoutUserInput {
   where: TodoWhereUniqueInput!
-  data: TodoUpdateWithoutAuthorDataInput!
+  data: TodoUpdateWithoutUserDataInput!
 }
 
-input TodoUpdateWithWhereUniqueWithoutTagInput {
+input TodoUpsertWithWhereUniqueWithoutUserInput {
   where: TodoWhereUniqueInput!
-  data: TodoUpdateWithoutTagDataInput!
-}
-
-input TodoUpsertWithWhereUniqueWithoutAuthorInput {
-  where: TodoWhereUniqueInput!
-  update: TodoUpdateWithoutAuthorDataInput!
-  create: TodoCreateWithoutAuthorInput!
-}
-
-input TodoUpsertWithWhereUniqueWithoutTagInput {
-  where: TodoWhereUniqueInput!
-  update: TodoUpdateWithoutTagDataInput!
-  create: TodoCreateWithoutTagInput!
+  update: TodoUpdateWithoutUserDataInput!
+  create: TodoCreateWithoutUserInput!
 }
 
 input TodoWhereInput {
@@ -899,8 +265,7 @@ input TodoWhereInput {
   content_not_starts_with: String
   content_ends_with: String
   content_not_ends_with: String
-  tag: TagWhereInput
-  author: UserWhereInput
+  user: UserWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -928,13 +293,9 @@ type User {
   id: ID!
   username: String!
   password: String!
-  name: String!
-  email: String
   permission: Permission!
   registDate: DateTime!
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   todos(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Todo!]
-  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note!]
 }
 
 type UserConnection {
@@ -947,22 +308,8 @@ input UserCreateInput {
   id: ID
   username: String!
   password: String!
-  name: String!
-  email: String
   permission: Permission
-  tags: TagCreateManyWithoutUserInput
-  todos: TodoCreateManyWithoutAuthorInput
-  notes: NoteCreateManyWithoutAuthorInput
-}
-
-input UserCreateOneWithoutNotesInput {
-  create: UserCreateWithoutNotesInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutTagsInput {
-  create: UserCreateWithoutTagsInput
-  connect: UserWhereUniqueInput
+  todos: TodoCreateManyWithoutUserInput
 }
 
 input UserCreateOneWithoutTodosInput {
@@ -970,37 +317,11 @@ input UserCreateOneWithoutTodosInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutNotesInput {
-  id: ID
-  username: String!
-  password: String!
-  name: String!
-  email: String
-  permission: Permission
-  tags: TagCreateManyWithoutUserInput
-  todos: TodoCreateManyWithoutAuthorInput
-}
-
-input UserCreateWithoutTagsInput {
-  id: ID
-  username: String!
-  password: String!
-  name: String!
-  email: String
-  permission: Permission
-  todos: TodoCreateManyWithoutAuthorInput
-  notes: NoteCreateManyWithoutAuthorInput
-}
-
 input UserCreateWithoutTodosInput {
   id: ID
   username: String!
   password: String!
-  name: String!
-  email: String
   permission: Permission
-  tags: TagCreateManyWithoutUserInput
-  notes: NoteCreateManyWithoutAuthorInput
 }
 
 type UserEdge {
@@ -1015,10 +336,6 @@ enum UserOrderByInput {
   username_DESC
   password_ASC
   password_DESC
-  name_ASC
-  name_DESC
-  email_ASC
-  email_DESC
   permission_ASC
   permission_DESC
   registDate_ASC
@@ -1029,8 +346,6 @@ type UserPreviousValues {
   id: ID!
   username: String!
   password: String!
-  name: String!
-  email: String
   permission: Permission!
   registDate: DateTime!
 }
@@ -1054,34 +369,14 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   username: String
   password: String
-  name: String
-  email: String
   permission: Permission
-  tags: TagUpdateManyWithoutUserInput
-  todos: TodoUpdateManyWithoutAuthorInput
-  notes: NoteUpdateManyWithoutAuthorInput
+  todos: TodoUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   username: String
   password: String
-  name: String
-  email: String
   permission: Permission
-}
-
-input UserUpdateOneRequiredWithoutNotesInput {
-  create: UserCreateWithoutNotesInput
-  update: UserUpdateWithoutNotesDataInput
-  upsert: UserUpsertWithoutNotesInput
-  connect: UserWhereUniqueInput
-}
-
-input UserUpdateOneRequiredWithoutTagsInput {
-  create: UserCreateWithoutTagsInput
-  update: UserUpdateWithoutTagsDataInput
-  upsert: UserUpsertWithoutTagsInput
-  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneRequiredWithoutTodosInput {
@@ -1091,44 +386,10 @@ input UserUpdateOneRequiredWithoutTodosInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutNotesDataInput {
-  username: String
-  password: String
-  name: String
-  email: String
-  permission: Permission
-  tags: TagUpdateManyWithoutUserInput
-  todos: TodoUpdateManyWithoutAuthorInput
-}
-
-input UserUpdateWithoutTagsDataInput {
-  username: String
-  password: String
-  name: String
-  email: String
-  permission: Permission
-  todos: TodoUpdateManyWithoutAuthorInput
-  notes: NoteUpdateManyWithoutAuthorInput
-}
-
 input UserUpdateWithoutTodosDataInput {
   username: String
   password: String
-  name: String
-  email: String
   permission: Permission
-  tags: TagUpdateManyWithoutUserInput
-  notes: NoteUpdateManyWithoutAuthorInput
-}
-
-input UserUpsertWithoutNotesInput {
-  update: UserUpdateWithoutNotesDataInput!
-  create: UserCreateWithoutNotesInput!
-}
-
-input UserUpsertWithoutTagsInput {
-  update: UserUpdateWithoutTagsDataInput!
-  create: UserCreateWithoutTagsInput!
 }
 
 input UserUpsertWithoutTodosInput {
@@ -1179,34 +440,6 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
   permission: Permission
   permission_not: Permission
   permission_in: [Permission!]
@@ -1219,9 +452,7 @@ input UserWhereInput {
   registDate_lte: DateTime
   registDate_gt: DateTime
   registDate_gte: DateTime
-  tags_some: TagWhereInput
   todos_some: TodoWhereInput
-  notes_some: NoteWhereInput
   AND: [UserWhereInput!]
 }
 

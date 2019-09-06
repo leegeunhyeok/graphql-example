@@ -13,14 +13,6 @@ var models = [
     embedded: false
   },
   {
-    name: "Tag",
-    embedded: false
-  },
-  {
-    name: "Note",
-    embedded: false
-  },
-  {
     name: "Permission",
     embedded: false
   }

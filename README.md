@@ -20,34 +20,7 @@ cd src/prisma && docker-compose up -d
 
 ### Schema
 
-```graphql
-# src/schema.graphql
-
-type Query {
-  user(id: ID!): user,
-  userTodo(id: ID!): [todo!]!
-}
-
-type Mutation {
-  signupUser(username: String!, password: String!, name: String!, email: String!): user!
-  addTodo(content: String!, authorId: ID!): todo!
-}
-
-type todo {
-  id: ID!
-  content: String!
-  author: user!
-}
-
-type user {
-  id: ID!
-  username: String!
-  password: String!
-  name: String
-  email: String!
-  todos: [todo!]!
-}
-```
+Check `src/schema.graphql`
 
 ## Run
 
@@ -63,109 +36,71 @@ node app.js
   - Playground - `localhost:{CONFIG.PORT}/playground`
 
 ```graphql
-# Add user
+# Regist user
 mutation {
-  signupUser(
-    username: "test00"
-    password: "1234"
-    name: "user"
-    email: "test@test.com"
-  ) {
-    id # USER_OBJECT_ID
-    username
-    name
-    email
+  register(username: "user", password: "1234") {
+    id,
+    username,
+    password,
+    permission,
+    registDate
   }
 }
 
-# Add TODO Items
+# {
+#   "data": {
+#     "register": {
+#       "id": "5d721fa024aa9a0007abeedb",
+#       "username": "user",
+#       "password": "$2a$10$oGvFD1I5V/9hkkn4/VWJM.00P/.hBavhui0rTOveWCyaXAo0wnY3q",
+#       "permission": "DEFAULT_USER",
+#       "registDate": "2019-09-06T08:58:08.100Z"
+#     }
+#   }
+# }
+
+
+
+# Login
 mutation {
-  addTodo(
-    content: "First TODO!"
-    authorId: "USER_OBJECT_ID"
-  ) {
-    author {
+  login(username: "user", password: "1234") {
+    token
+    user {
       username
-      email
     }
-    content
   }
 }
 
-mutation {
-  addTodo(
-    content: "Second TODO!"
-    authorId: "USER_OBJECT_ID"
-  ) {
-    author {
-      username
-      email
-    }
-    content
-  }
-}
+# {
+#   "data": {
+#     "login": {
+#       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNzIxZmEwMjRhYTlhMDAwN2FiZWVkYiIsImlhdCI6MTU2Nzc2MDQyMCwiZXhwIjoxNTY3ODQ2ODIwfQ.12ckPM9mog2iz6iSQg67Nf4f_d5mxMfQExj8X5sgUQc",
+#       "user": {
+#         "username": "user"
+#       }
+#     }
+#   }
+# }
 
-# Query
+
+
+# Current logined user (Need token!)
+# If request without token, you will get "Not Authenticated" error
+#
+# Include { "Authorization": "Bearer TOKEN" } to HTTP Header
 query {
-  user(id: USER_OBJECT_ID) {
-    username
-    email
-    todos {
-      id
-      content
-    }
-  }
-}
-```
-
-Result
-
-```json
-// User registered
-{
-  "data": {
-    "signupUser": {
-      "id": "5d71115e24aa9a0007abeed2",
-      "username": "test00",
-      "name": "user",
-      "email": "test@test.com"
-    }
+  currentUser {
+		username
   }
 }
 
-// TODO Item Added
-{
-  "data": {
-    "addTodo": {
-      "author": {
-        "username": "test00",
-        "email": "test@test.com"
-      },
-      "content": "First TODO!"
-    }
-  }
-}
-// Same as First TODO result..
-
-// Query
-{
-  "data": {
-    "user": {
-      "username": "test00",
-      "email": "test@test.com",
-      "todos": [
-        {
-          "id": "5d7111b024aa9a0007abeed4",
-          "content": "First TODO!"
-        },
-        {
-          "id": "5d71122324aa9a0007abeed5",
-          "content": "Second TODO!"
-        }
-      ]
-    }
-  }
-}
+# {
+#   "data": {
+#     "currentUser": {
+#       "username": "user"
+#     }
+#   }
+# }
 ```
 
 ## Full stack develop

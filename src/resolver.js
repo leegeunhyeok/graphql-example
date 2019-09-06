@@ -1,72 +1,63 @@
 /**
  * Resolvers
  */
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 module.exports = {
   Query: {
-    user: (_parent, { id }, context) => {
-      return context.prisma.user({ id })
-    },
-    todoes: (_parent, { id }, context) => {
-      return context.prisma.todos({
-        where: {
-          author: { id }
-        }
-      })
+    currentUser: (_parent, _args, { user, prisma }) => {
+      if (!user) {
+        throw new Error('Not Authenticated')
+      }
+      return prisma.user({ id: user.id })
     }
   },
   Mutation: {
-    createUser: (_parent, { data: { username, password, name, email } }, context) => {
-      return context.prisma.createUser({
+    register: async (_parent, { username, password }, ctx) => {
+      const hashedPassword = await bcrypt.hash(password, 10)
+      const user = await ctx.prisma.createUser({
         username,
-        password,
-        name,
-        email
+        password: hashedPassword
       })
+      return user
     },
-    createTodo: (_parent, { content, authorId }, context) => {
-      return context.prisma.createTodo({
-        data: {
-          content,
-          author: {
-            connect: {
-              id: authorId
-            }
-          }
-        }
-      })
+    login: async (_parent, { username, password }, ctx) => {
+      const user = await ctx.prisma.user({ username })
+    
+      if (!user) {
+        throw new Error('Invalid Login')
+      }
+    
+      const passwordMatch = await bcrypt.compare(password, user.password)
+    
+      if (!passwordMatch) {
+        throw new Error('Invalid Login')
+      }
+    
+      const token = jwt.sign(
+        {
+          id: user.id,
+          username: user.email
+        },
+        'secret',
+        { expiresIn: '1d' }
+      )
+
+      return {
+        token,
+        user
+      }
     }
   },
   User: {
-    tags: ({ id }, _args, context) => {
-      return context.prisma.User({ id }).tags()
-    },
     todos: ({ id }, _args, context) => {
       return context.prisma.User({ id }).todos()
-    },
-    notes: ({ id }, _args, context) => {
-      return context.prisma.User({ id }).notes()
-    }
-  },
-  Tag: {
-    user: ({ id }, _args, context) => {
-      return context.prisma.Tag({ id }).user()
-    },
-    todos: ({ id }, _args, context) => {
-      return context.prisma.Tag({ id }).todos()
     }
   },
   Todo: {
-    tag: ({ id }, _args, context) => {
-      return context.prisma.Todo({ id }).tag()
-    },
-    author: ({ id }, _args, context) => {
-      return context.prisma.Todo({ id }).author()
-    }
-  },
-  Note: {
-    author: ({ id }, _args, context) => {
-      return context.prisma.Note({ id }).author()
+    user: ({ id }, _args, context) => {
+      return context.prisma.Todo({ id }).user()
     }
   }
 }
