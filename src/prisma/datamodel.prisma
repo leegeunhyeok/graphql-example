@@ -1,14 +1,47 @@
-type todo {
-  id: ID! @id @unique
-  content: String!
-  author: user! @relation(link: INLINE)
-}
-
-type user {
-  id: ID! @id @unique
+type User {
+  id: ID! @id
   username: String! @unique
   password: String!
-  name: String
+  name: String!
   email: String
-  todos: [todo!]!
+  permission: Permission! @default(value: DEFAULT_USER)
+  registDate: DateTime! @createdAt
+  tags: [Tag!]! @relation(link: INLINE, name: "TagByUser")
+  todos: [Todo!]! @relation(link: INLINE, name: "TodoByUser")
+  notes: [Note!]! @relation(link: INLINE, name: "NoteByUser")
+}
+
+type Todo {
+  id: ID! @id
+  content: String!
+  tag: Tag @relation(name: "TodoByTag")
+  author: User! @relation(name: "TodoByUser")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime @updatedAt
+}
+
+type Tag {
+  id: ID! @id
+  name: String!
+  color: String!
+  user: User! @relation(name: "TagByUser")
+  todos: [Todo!]! @relation(link: INLINE, name: "TodoByTag", onDelete: SET_NULL)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime @updatedAt
+}
+
+type Note {
+  id: ID! @id
+  title: String!
+  content: String!
+  author: User! @relation(name: "NoteByUser")
+  publish: Boolean! @default(value: false)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime @updatedAt
+}
+
+enum Permission {
+  ADMIN
+  DEFAULT_USER
+  PREMIUM_USER
 }

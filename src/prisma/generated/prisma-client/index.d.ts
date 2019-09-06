@@ -16,8 +16,10 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
-  todo: (where?: todoWhereInput) => Promise<boolean>;
-  user: (where?: userWhereInput) => Promise<boolean>;
+  note: (where?: NoteWhereInput) => Promise<boolean>;
+  tag: (where?: TagWhereInput) => Promise<boolean>;
+  todo: (where?: TodoWhereInput) => Promise<boolean>;
+  user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -39,82 +41,152 @@ export interface Prisma {
    * Queries
    */
 
-  todo: (where: todoWhereUniqueInput) => todoNullablePromise;
+  note: (where: NoteWhereUniqueInput) => NoteNullablePromise;
+  notes: (args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Note>;
+  notesConnection: (args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => NoteConnectionPromise;
+  tag: (where: TagWhereUniqueInput) => TagNullablePromise;
+  tags: (args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Tag>;
+  tagsConnection: (args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TagConnectionPromise;
+  todo: (where: TodoWhereUniqueInput) => TodoNullablePromise;
   todoes: (args?: {
-    where?: todoWhereInput;
-    orderBy?: todoOrderByInput;
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<todo>;
+  }) => FragmentableArray<Todo>;
   todoesConnection: (args?: {
-    where?: todoWhereInput;
-    orderBy?: todoOrderByInput;
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => todoConnectionPromise;
-  user: (where: userWhereUniqueInput) => userNullablePromise;
+  }) => TodoConnectionPromise;
+  user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
-    where?: userWhereInput;
-    orderBy?: userOrderByInput;
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<user>;
+  }) => FragmentableArray<User>;
   usersConnection: (args?: {
-    where?: userWhereInput;
-    orderBy?: userOrderByInput;
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => userConnectionPromise;
+  }) => UserConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
    * Mutations
    */
 
-  createtodo: (data: todoCreateInput) => todoPromise;
-  updatetodo: (args: {
-    data: todoUpdateInput;
-    where: todoWhereUniqueInput;
-  }) => todoPromise;
-  updateManytodoes: (args: {
-    data: todoUpdateManyMutationInput;
-    where?: todoWhereInput;
+  createNote: (data: NoteCreateInput) => NotePromise;
+  updateNote: (args: {
+    data: NoteUpdateInput;
+    where: NoteWhereUniqueInput;
+  }) => NotePromise;
+  updateManyNotes: (args: {
+    data: NoteUpdateManyMutationInput;
+    where?: NoteWhereInput;
   }) => BatchPayloadPromise;
-  upserttodo: (args: {
-    where: todoWhereUniqueInput;
-    create: todoCreateInput;
-    update: todoUpdateInput;
-  }) => todoPromise;
-  deletetodo: (where: todoWhereUniqueInput) => todoPromise;
-  deleteManytodoes: (where?: todoWhereInput) => BatchPayloadPromise;
-  createuser: (data: userCreateInput) => userPromise;
-  updateuser: (args: {
-    data: userUpdateInput;
-    where: userWhereUniqueInput;
-  }) => userPromise;
-  updateManyusers: (args: {
-    data: userUpdateManyMutationInput;
-    where?: userWhereInput;
+  upsertNote: (args: {
+    where: NoteWhereUniqueInput;
+    create: NoteCreateInput;
+    update: NoteUpdateInput;
+  }) => NotePromise;
+  deleteNote: (where: NoteWhereUniqueInput) => NotePromise;
+  deleteManyNotes: (where?: NoteWhereInput) => BatchPayloadPromise;
+  createTag: (data: TagCreateInput) => TagPromise;
+  updateTag: (args: {
+    data: TagUpdateInput;
+    where: TagWhereUniqueInput;
+  }) => TagPromise;
+  updateManyTags: (args: {
+    data: TagUpdateManyMutationInput;
+    where?: TagWhereInput;
   }) => BatchPayloadPromise;
-  upsertuser: (args: {
-    where: userWhereUniqueInput;
-    create: userCreateInput;
-    update: userUpdateInput;
-  }) => userPromise;
-  deleteuser: (where: userWhereUniqueInput) => userPromise;
-  deleteManyusers: (where?: userWhereInput) => BatchPayloadPromise;
+  upsertTag: (args: {
+    where: TagWhereUniqueInput;
+    create: TagCreateInput;
+    update: TagUpdateInput;
+  }) => TagPromise;
+  deleteTag: (where: TagWhereUniqueInput) => TagPromise;
+  deleteManyTags: (where?: TagWhereInput) => BatchPayloadPromise;
+  createTodo: (data: TodoCreateInput) => TodoPromise;
+  updateTodo: (args: {
+    data: TodoUpdateInput;
+    where: TodoWhereUniqueInput;
+  }) => TodoPromise;
+  updateManyTodoes: (args: {
+    data: TodoUpdateManyMutationInput;
+    where?: TodoWhereInput;
+  }) => BatchPayloadPromise;
+  upsertTodo: (args: {
+    where: TodoWhereUniqueInput;
+    create: TodoCreateInput;
+    update: TodoUpdateInput;
+  }) => TodoPromise;
+  deleteTodo: (where: TodoWhereUniqueInput) => TodoPromise;
+  deleteManyTodoes: (where?: TodoWhereInput) => BatchPayloadPromise;
+  createUser: (data: UserCreateInput) => UserPromise;
+  updateUser: (args: {
+    data: UserUpdateInput;
+    where: UserWhereUniqueInput;
+  }) => UserPromise;
+  updateManyUsers: (args: {
+    data: UserUpdateManyMutationInput;
+    where?: UserWhereInput;
+  }) => BatchPayloadPromise;
+  upsertUser: (args: {
+    where: UserWhereUniqueInput;
+    create: UserCreateInput;
+    update: UserUpdateInput;
+  }) => UserPromise;
+  deleteUser: (where: UserWhereUniqueInput) => UserPromise;
+  deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -124,12 +196,18 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  note: (
+    where?: NoteSubscriptionWhereInput
+  ) => NoteSubscriptionPayloadSubscription;
+  tag: (
+    where?: TagSubscriptionWhereInput
+  ) => TagSubscriptionPayloadSubscription;
   todo: (
-    where?: todoSubscriptionWhereInput
-  ) => todoSubscriptionPayloadSubscription;
+    where?: TodoSubscriptionWhereInput
+  ) => TodoSubscriptionPayloadSubscription;
   user: (
-    where?: userSubscriptionWhereInput
-  ) => userSubscriptionPayloadSubscription;
+    where?: UserSubscriptionWhereInput
+  ) => UserSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -140,13 +218,45 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type todoOrderByInput =
+export type TagOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "color_ASC"
+  | "color_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type TodoOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "content_ASC"
-  | "content_DESC";
+  | "content_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
-export type userOrderByInput =
+export type Permission = "ADMIN" | "DEFAULT_USER" | "PREMIUM_USER";
+
+export type NoteOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "content_ASC"
+  | "content_DESC"
+  | "publish_ASC"
+  | "publish_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "username_ASC"
@@ -156,180 +266,32 @@ export type userOrderByInput =
   | "name_ASC"
   | "name_DESC"
   | "email_ASC"
-  | "email_DESC";
+  | "email_DESC"
+  | "permission_ASC"
+  | "permission_DESC"
+  | "registDate_ASC"
+  | "registDate_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface userUpdateOneRequiredWithoutTodosInput {
-  create?: Maybe<userCreateWithoutTodosInput>;
-  update?: Maybe<userUpdateWithoutTodosDataInput>;
-  upsert?: Maybe<userUpsertWithoutTodosInput>;
-  connect?: Maybe<userWhereUniqueInput>;
+export interface TagUpdateWithoutUserDataInput {
+  name?: Maybe<String>;
+  color?: Maybe<String>;
+  todos?: Maybe<TodoUpdateManyWithoutTagInput>;
 }
 
-export type todoWhereUniqueInput = AtLeastOne<{
+export type NoteWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface todoUpdateManyMutationInput {
-  content?: Maybe<String>;
+export interface UserUpdateOneRequiredWithoutTodosInput {
+  create?: Maybe<UserCreateWithoutTodosInput>;
+  update?: Maybe<UserUpdateWithoutTodosDataInput>;
+  upsert?: Maybe<UserUpsertWithoutTodosInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface todoWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  author?: Maybe<userWhereInput>;
-  AND?: Maybe<todoWhereInput[] | todoWhereInput>;
-}
-
-export interface todoCreateInput {
-  id?: Maybe<ID_Input>;
-  content: String;
-  author: userCreateOneWithoutTodosInput;
-}
-
-export interface todoCreateManyWithoutAuthorInput {
-  create?: Maybe<todoCreateWithoutAuthorInput[] | todoCreateWithoutAuthorInput>;
-  connect?: Maybe<todoWhereUniqueInput[] | todoWhereUniqueInput>;
-}
-
-export interface userCreateOneWithoutTodosInput {
-  create?: Maybe<userCreateWithoutTodosInput>;
-  connect?: Maybe<userWhereUniqueInput>;
-}
-
-export interface todoSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<todoWhereInput>;
-  AND?: Maybe<todoSubscriptionWhereInput[] | todoSubscriptionWhereInput>;
-}
-
-export interface userCreateWithoutTodosInput {
-  id?: Maybe<ID_Input>;
-  username: String;
-  password: String;
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-}
-
-export interface todoUpdateManyDataInput {
-  content?: Maybe<String>;
-}
-
-export interface todoUpdateInput {
-  content?: Maybe<String>;
-  author?: Maybe<userUpdateOneRequiredWithoutTodosInput>;
-}
-
-export type userWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  username?: Maybe<String>;
-}>;
-
-export interface todoUpdateManyWithoutAuthorInput {
-  create?: Maybe<todoCreateWithoutAuthorInput[] | todoCreateWithoutAuthorInput>;
-  delete?: Maybe<todoWhereUniqueInput[] | todoWhereUniqueInput>;
-  connect?: Maybe<todoWhereUniqueInput[] | todoWhereUniqueInput>;
-  set?: Maybe<todoWhereUniqueInput[] | todoWhereUniqueInput>;
-  disconnect?: Maybe<todoWhereUniqueInput[] | todoWhereUniqueInput>;
-  update?: Maybe<
-    | todoUpdateWithWhereUniqueWithoutAuthorInput[]
-    | todoUpdateWithWhereUniqueWithoutAuthorInput
-  >;
-  upsert?: Maybe<
-    | todoUpsertWithWhereUniqueWithoutAuthorInput[]
-    | todoUpsertWithWhereUniqueWithoutAuthorInput
-  >;
-  deleteMany?: Maybe<todoScalarWhereInput[] | todoScalarWhereInput>;
-  updateMany?: Maybe<
-    todoUpdateManyWithWhereNestedInput[] | todoUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface todoUpsertWithWhereUniqueWithoutAuthorInput {
-  where: todoWhereUniqueInput;
-  update: todoUpdateWithoutAuthorDataInput;
-  create: todoCreateWithoutAuthorInput;
-}
-
-export interface userUpdateWithoutTodosDataInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-}
-
-export interface todoUpdateWithWhereUniqueWithoutAuthorInput {
-  where: todoWhereUniqueInput;
-  data: todoUpdateWithoutAuthorDataInput;
-}
-
-export interface userUpsertWithoutTodosInput {
-  update: userUpdateWithoutTodosDataInput;
-  create: userCreateWithoutTodosInput;
-}
-
-export interface userSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<userWhereInput>;
-  AND?: Maybe<userSubscriptionWhereInput[] | userSubscriptionWhereInput>;
-}
-
-export interface userCreateInput {
-  id?: Maybe<ID_Input>;
-  username: String;
-  password: String;
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  todos?: Maybe<todoCreateManyWithoutAuthorInput>;
-}
-
-export interface todoCreateWithoutAuthorInput {
-  id?: Maybe<ID_Input>;
-  content: String;
-}
-
-export interface userUpdateInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  todos?: Maybe<todoUpdateManyWithoutAuthorInput>;
-}
-
-export interface userWhereInput {
+export interface UserWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -400,22 +362,381 @@ export interface userWhereInput {
   email_not_starts_with?: Maybe<String>;
   email_ends_with?: Maybe<String>;
   email_not_ends_with?: Maybe<String>;
-  todos_some?: Maybe<todoWhereInput>;
-  AND?: Maybe<userWhereInput[] | userWhereInput>;
+  permission?: Maybe<Permission>;
+  permission_not?: Maybe<Permission>;
+  permission_in?: Maybe<Permission[] | Permission>;
+  permission_not_in?: Maybe<Permission[] | Permission>;
+  registDate?: Maybe<DateTimeInput>;
+  registDate_not?: Maybe<DateTimeInput>;
+  registDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  registDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  registDate_lt?: Maybe<DateTimeInput>;
+  registDate_lte?: Maybe<DateTimeInput>;
+  registDate_gt?: Maybe<DateTimeInput>;
+  registDate_gte?: Maybe<DateTimeInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  todos_some?: Maybe<TodoWhereInput>;
+  notes_some?: Maybe<NoteWhereInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface userUpdateManyMutationInput {
+export interface UserUpdateWithoutTodosDataInput {
   username?: Maybe<String>;
   password?: Maybe<String>;
   name?: Maybe<String>;
   email?: Maybe<String>;
+  permission?: Maybe<Permission>;
+  tags?: Maybe<TagUpdateManyWithoutUserInput>;
+  notes?: Maybe<NoteUpdateManyWithoutAuthorInput>;
 }
 
-export interface todoUpdateWithoutAuthorDataInput {
+export interface NoteWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
   content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  author?: Maybe<UserWhereInput>;
+  publish?: Maybe<Boolean>;
+  publish_not?: Maybe<Boolean>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<NoteWhereInput[] | NoteWhereInput>;
 }
 
-export interface todoScalarWhereInput {
+export interface NoteUpdateManyWithoutAuthorInput {
+  create?: Maybe<NoteCreateWithoutAuthorInput[] | NoteCreateWithoutAuthorInput>;
+  delete?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  connect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  set?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  disconnect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  update?: Maybe<
+    | NoteUpdateWithWhereUniqueWithoutAuthorInput[]
+    | NoteUpdateWithWhereUniqueWithoutAuthorInput
+  >;
+  upsert?: Maybe<
+    | NoteUpsertWithWhereUniqueWithoutAuthorInput[]
+    | NoteUpsertWithWhereUniqueWithoutAuthorInput
+  >;
+  deleteMany?: Maybe<NoteScalarWhereInput[] | NoteScalarWhereInput>;
+  updateMany?: Maybe<
+    NoteUpdateManyWithWhereNestedInput[] | NoteUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TagWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  color?: Maybe<String>;
+  color_not?: Maybe<String>;
+  color_in?: Maybe<String[] | String>;
+  color_not_in?: Maybe<String[] | String>;
+  color_lt?: Maybe<String>;
+  color_lte?: Maybe<String>;
+  color_gt?: Maybe<String>;
+  color_gte?: Maybe<String>;
+  color_contains?: Maybe<String>;
+  color_not_contains?: Maybe<String>;
+  color_starts_with?: Maybe<String>;
+  color_not_starts_with?: Maybe<String>;
+  color_ends_with?: Maybe<String>;
+  color_not_ends_with?: Maybe<String>;
+  user?: Maybe<UserWhereInput>;
+  todos_some?: Maybe<TodoWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<TagWhereInput[] | TagWhereInput>;
+}
+
+export interface TagCreateWithoutTodosInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  color: String;
+  user: UserCreateOneWithoutTagsInput;
+}
+
+export interface TagUpdateWithoutTodosDataInput {
+  name?: Maybe<String>;
+  color?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
+}
+
+export interface UserCreateOneWithoutTagsInput {
+  create?: Maybe<UserCreateWithoutTagsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface NoteUpdateWithWhereUniqueWithoutAuthorInput {
+  where: NoteWhereUniqueInput;
+  data: NoteUpdateWithoutAuthorDataInput;
+}
+
+export interface UserCreateWithoutTagsInput {
+  id?: Maybe<ID_Input>;
+  username: String;
+  password: String;
+  name: String;
+  email?: Maybe<String>;
+  permission?: Maybe<Permission>;
+  todos?: Maybe<TodoCreateManyWithoutAuthorInput>;
+  notes?: Maybe<NoteCreateManyWithoutAuthorInput>;
+}
+
+export interface TodoSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TodoWhereInput>;
+  AND?: Maybe<TodoSubscriptionWhereInput[] | TodoSubscriptionWhereInput>;
+}
+
+export interface NoteUpdateInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  author?: Maybe<UserUpdateOneRequiredWithoutNotesInput>;
+  publish?: Maybe<Boolean>;
+}
+
+export interface NoteSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<NoteWhereInput>;
+  AND?: Maybe<NoteSubscriptionWhereInput[] | NoteSubscriptionWhereInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutNotesInput {
+  create?: Maybe<UserCreateWithoutNotesInput>;
+  update?: Maybe<UserUpdateWithoutNotesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutNotesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  permission?: Maybe<Permission>;
+  tags?: Maybe<TagUpdateManyWithoutUserInput>;
+  todos?: Maybe<TodoUpdateManyWithoutAuthorInput>;
+  notes?: Maybe<NoteUpdateManyWithoutAuthorInput>;
+}
+
+export interface UserUpdateWithoutNotesDataInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  permission?: Maybe<Permission>;
+  tags?: Maybe<TagUpdateManyWithoutUserInput>;
+  todos?: Maybe<TodoUpdateManyWithoutAuthorInput>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  username: String;
+  password: String;
+  name: String;
+  email?: Maybe<String>;
+  permission?: Maybe<Permission>;
+  tags?: Maybe<TagCreateManyWithoutUserInput>;
+  todos?: Maybe<TodoCreateManyWithoutAuthorInput>;
+  notes?: Maybe<NoteCreateManyWithoutAuthorInput>;
+}
+
+export interface TagUpdateManyWithoutUserInput {
+  create?: Maybe<TagCreateWithoutUserInput[] | TagCreateWithoutUserInput>;
+  delete?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  set?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  disconnect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  update?: Maybe<
+    | TagUpdateWithWhereUniqueWithoutUserInput[]
+    | TagUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | TagUpsertWithWhereUniqueWithoutUserInput[]
+    | TagUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  updateMany?: Maybe<
+    TagUpdateManyWithWhereNestedInput[] | TagUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TodoUpdateInput {
+  content?: Maybe<String>;
+  tag?: Maybe<TagUpdateOneWithoutTodosInput>;
+  author?: Maybe<UserUpdateOneRequiredWithoutTodosInput>;
+}
+
+export interface TagUpdateWithWhereUniqueWithoutUserInput {
+  where: TagWhereUniqueInput;
+  data: TagUpdateWithoutUserDataInput;
+}
+
+export interface TodoCreateInput {
+  id?: Maybe<ID_Input>;
+  content: String;
+  tag?: Maybe<TagCreateOneWithoutTodosInput>;
+  author: UserCreateOneWithoutTodosInput;
+}
+
+export interface TagUpsertWithoutTodosInput {
+  update: TagUpdateWithoutTodosDataInput;
+  create: TagCreateWithoutTodosInput;
+}
+
+export interface TagUpdateInput {
+  name?: Maybe<String>;
+  color?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
+  todos?: Maybe<TodoUpdateManyWithoutTagInput>;
+}
+
+export interface TodoUpdateManyWithoutTagInput {
+  create?: Maybe<TodoCreateWithoutTagInput[] | TodoCreateWithoutTagInput>;
+  delete?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+  connect?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+  set?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+  disconnect?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+  update?: Maybe<
+    | TodoUpdateWithWhereUniqueWithoutTagInput[]
+    | TodoUpdateWithWhereUniqueWithoutTagInput
+  >;
+  upsert?: Maybe<
+    | TodoUpsertWithWhereUniqueWithoutTagInput[]
+    | TodoUpsertWithWhereUniqueWithoutTagInput
+  >;
+  deleteMany?: Maybe<TodoScalarWhereInput[] | TodoScalarWhereInput>;
+  updateMany?: Maybe<
+    TodoUpdateManyWithWhereNestedInput[] | TodoUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TagCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  color: String;
+  user: UserCreateOneWithoutTagsInput;
+  todos?: Maybe<TodoCreateManyWithoutTagInput>;
+}
+
+export interface TodoUpdateWithWhereUniqueWithoutTagInput {
+  where: TodoWhereUniqueInput;
+  data: TodoUpdateWithoutTagDataInput;
+}
+
+export interface UserUpsertWithoutNotesInput {
+  update: UserUpdateWithoutNotesDataInput;
+  create: UserCreateWithoutNotesInput;
+}
+
+export interface TodoUpdateWithoutTagDataInput {
+  content?: Maybe<String>;
+  author?: Maybe<UserUpdateOneRequiredWithoutTodosInput>;
+}
+
+export interface UserCreateOneWithoutNotesInput {
+  create?: Maybe<UserCreateWithoutNotesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface TodoWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -444,18 +765,836 @@ export interface todoScalarWhereInput {
   content_not_starts_with?: Maybe<String>;
   content_ends_with?: Maybe<String>;
   content_not_ends_with?: Maybe<String>;
-  AND?: Maybe<todoScalarWhereInput[] | todoScalarWhereInput>;
-  OR?: Maybe<todoScalarWhereInput[] | todoScalarWhereInput>;
-  NOT?: Maybe<todoScalarWhereInput[] | todoScalarWhereInput>;
+  tag?: Maybe<TagWhereInput>;
+  author?: Maybe<UserWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<TodoWhereInput[] | TodoWhereInput>;
 }
 
-export interface todoUpdateManyWithWhereNestedInput {
-  where: todoScalarWhereInput;
-  data: todoUpdateManyDataInput;
+export interface TagCreateManyWithoutUserInput {
+  create?: Maybe<TagCreateWithoutUserInput[] | TagCreateWithoutUserInput>;
+  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutTagsInput {
+  update: UserUpdateWithoutTagsDataInput;
+  create: UserCreateWithoutTagsInput;
+}
+
+export interface TodoCreateManyWithoutTagInput {
+  create?: Maybe<TodoCreateWithoutTagInput[] | TodoCreateWithoutTagInput>;
+  connect?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutTagsDataInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  permission?: Maybe<Permission>;
+  todos?: Maybe<TodoUpdateManyWithoutAuthorInput>;
+  notes?: Maybe<NoteUpdateManyWithoutAuthorInput>;
+}
+
+export interface UserCreateOneWithoutTodosInput {
+  create?: Maybe<UserCreateWithoutTodosInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutTagsInput {
+  create?: Maybe<UserCreateWithoutTagsInput>;
+  update?: Maybe<UserUpdateWithoutTagsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutTagsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface NoteCreateManyWithoutAuthorInput {
+  create?: Maybe<NoteCreateWithoutAuthorInput[] | NoteCreateWithoutAuthorInput>;
+  connect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+}
+
+export interface NoteUpdateWithoutAuthorDataInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  publish?: Maybe<Boolean>;
+}
+
+export interface TodoCreateManyWithoutAuthorInput {
+  create?: Maybe<TodoCreateWithoutAuthorInput[] | TodoCreateWithoutAuthorInput>;
+  connect?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+}
+
+export interface NoteUpsertWithWhereUniqueWithoutAuthorInput {
+  where: NoteWhereUniqueInput;
+  update: NoteUpdateWithoutAuthorDataInput;
+  create: NoteCreateWithoutAuthorInput;
+}
+
+export interface TagCreateOneWithoutTodosInput {
+  create?: Maybe<TagCreateWithoutTodosInput>;
+  connect?: Maybe<TagWhereUniqueInput>;
+}
+
+export interface NoteScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  publish?: Maybe<Boolean>;
+  publish_not?: Maybe<Boolean>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<NoteScalarWhereInput[] | NoteScalarWhereInput>;
+  OR?: Maybe<NoteScalarWhereInput[] | NoteScalarWhereInput>;
+  NOT?: Maybe<NoteScalarWhereInput[] | NoteScalarWhereInput>;
+}
+
+export interface TagSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TagWhereInput>;
+  AND?: Maybe<TagSubscriptionWhereInput[] | TagSubscriptionWhereInput>;
+}
+
+export interface NoteUpdateManyWithWhereNestedInput {
+  where: NoteScalarWhereInput;
+  data: NoteUpdateManyDataInput;
+}
+
+export type TagWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface NoteUpdateManyDataInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  publish?: Maybe<Boolean>;
+}
+
+export type TodoWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpsertWithoutTodosInput {
+  update: UserUpdateWithoutTodosDataInput;
+  create: UserCreateWithoutTodosInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  username?: Maybe<String>;
+}>;
+
+export interface TodoUpsertWithWhereUniqueWithoutTagInput {
+  where: TodoWhereUniqueInput;
+  update: TodoUpdateWithoutTagDataInput;
+  create: TodoCreateWithoutTagInput;
+}
+
+export interface TodoUpsertWithWhereUniqueWithoutAuthorInput {
+  where: TodoWhereUniqueInput;
+  update: TodoUpdateWithoutAuthorDataInput;
+  create: TodoCreateWithoutAuthorInput;
+}
+
+export interface TodoScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<TodoScalarWhereInput[] | TodoScalarWhereInput>;
+  OR?: Maybe<TodoScalarWhereInput[] | TodoScalarWhereInput>;
+  NOT?: Maybe<TodoScalarWhereInput[] | TodoScalarWhereInput>;
+}
+
+export interface UserCreateWithoutNotesInput {
+  id?: Maybe<ID_Input>;
+  username: String;
+  password: String;
+  name: String;
+  email?: Maybe<String>;
+  permission?: Maybe<Permission>;
+  tags?: Maybe<TagCreateManyWithoutUserInput>;
+  todos?: Maybe<TodoCreateManyWithoutAuthorInput>;
+}
+
+export interface TodoUpdateManyWithWhereNestedInput {
+  where: TodoScalarWhereInput;
+  data: TodoUpdateManyDataInput;
+}
+
+export interface TodoCreateWithoutTagInput {
+  id?: Maybe<ID_Input>;
+  content: String;
+  author: UserCreateOneWithoutTodosInput;
+}
+
+export interface TodoUpdateManyDataInput {
+  content?: Maybe<String>;
+}
+
+export interface NoteCreateWithoutAuthorInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  content: String;
+  publish?: Maybe<Boolean>;
+}
+
+export interface TagUpsertWithWhereUniqueWithoutUserInput {
+  where: TagWhereUniqueInput;
+  update: TagUpdateWithoutUserDataInput;
+  create: TagCreateWithoutUserInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface TagScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  color?: Maybe<String>;
+  color_not?: Maybe<String>;
+  color_in?: Maybe<String[] | String>;
+  color_not_in?: Maybe<String[] | String>;
+  color_lt?: Maybe<String>;
+  color_lte?: Maybe<String>;
+  color_gt?: Maybe<String>;
+  color_gte?: Maybe<String>;
+  color_contains?: Maybe<String>;
+  color_not_contains?: Maybe<String>;
+  color_starts_with?: Maybe<String>;
+  color_not_starts_with?: Maybe<String>;
+  color_ends_with?: Maybe<String>;
+  color_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  OR?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  NOT?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+}
+
+export interface TodoUpdateManyMutationInput {
+  content?: Maybe<String>;
+}
+
+export interface TagUpdateManyWithWhereNestedInput {
+  where: TagScalarWhereInput;
+  data: TagUpdateManyDataInput;
+}
+
+export interface NoteUpdateManyMutationInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  publish?: Maybe<Boolean>;
+}
+
+export interface TagUpdateManyDataInput {
+  name?: Maybe<String>;
+  color?: Maybe<String>;
+}
+
+export interface TagCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  color: String;
+  todos?: Maybe<TodoCreateManyWithoutTagInput>;
+}
+
+export interface TagUpdateOneWithoutTodosInput {
+  create?: Maybe<TagCreateWithoutTodosInput>;
+  update?: Maybe<TagUpdateWithoutTodosDataInput>;
+  upsert?: Maybe<TagUpsertWithoutTodosInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<TagWhereUniqueInput>;
+}
+
+export interface TodoUpdateWithoutAuthorDataInput {
+  content?: Maybe<String>;
+  tag?: Maybe<TagUpdateOneWithoutTodosInput>;
+}
+
+export interface TodoUpdateWithWhereUniqueWithoutAuthorInput {
+  where: TodoWhereUniqueInput;
+  data: TodoUpdateWithoutAuthorDataInput;
+}
+
+export interface TodoUpdateManyWithoutAuthorInput {
+  create?: Maybe<TodoCreateWithoutAuthorInput[] | TodoCreateWithoutAuthorInput>;
+  delete?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+  connect?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+  set?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+  disconnect?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+  update?: Maybe<
+    | TodoUpdateWithWhereUniqueWithoutAuthorInput[]
+    | TodoUpdateWithWhereUniqueWithoutAuthorInput
+  >;
+  upsert?: Maybe<
+    | TodoUpsertWithWhereUniqueWithoutAuthorInput[]
+    | TodoUpsertWithWhereUniqueWithoutAuthorInput
+  >;
+  deleteMany?: Maybe<TodoScalarWhereInput[] | TodoScalarWhereInput>;
+  updateMany?: Maybe<
+    TodoUpdateManyWithWhereNestedInput[] | TodoUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserCreateWithoutTodosInput {
+  id?: Maybe<ID_Input>;
+  username: String;
+  password: String;
+  name: String;
+  email?: Maybe<String>;
+  permission?: Maybe<Permission>;
+  tags?: Maybe<TagCreateManyWithoutUserInput>;
+  notes?: Maybe<NoteCreateManyWithoutAuthorInput>;
+}
+
+export interface NoteCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  content: String;
+  author: UserCreateOneWithoutNotesInput;
+  publish?: Maybe<Boolean>;
+}
+
+export interface TagUpdateManyMutationInput {
+  name?: Maybe<String>;
+  color?: Maybe<String>;
+}
+
+export interface UserUpdateManyMutationInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  permission?: Maybe<Permission>;
+}
+
+export interface TodoCreateWithoutAuthorInput {
+  id?: Maybe<ID_Input>;
+  content: String;
+  tag?: Maybe<TagCreateOneWithoutTodosInput>;
 }
 
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  username: String;
+  password: String;
+  name: String;
+  email?: String;
+  permission: Permission;
+  registDate: DateTimeOutput;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  username: () => Promise<String>;
+  password: () => Promise<String>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  permission: () => Promise<Permission>;
+  registDate: () => Promise<DateTimeOutput>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  username: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  permission: () => Promise<AsyncIterator<Permission>>;
+  registDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TagConnection {
+  pageInfo: PageInfo;
+  edges: TagEdge[];
+}
+
+export interface TagConnectionPromise
+  extends Promise<TagConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TagEdge>>() => T;
+  aggregate: <T = AggregateTagPromise>() => T;
+}
+
+export interface TagConnectionSubscription
+  extends Promise<AsyncIterator<TagConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TagEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTagSubscription>() => T;
+}
+
+export interface Tag {
+  id: ID_Output;
+  name: String;
+  color: String;
+  createdAt: DateTimeOutput;
+  updatedAt?: DateTimeOutput;
+}
+
+export interface TagPromise extends Promise<Tag>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  color: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+  todos: <T = FragmentableArray<Todo>>(args?: {
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface TagSubscription
+  extends Promise<AsyncIterator<Tag>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  color: () => Promise<AsyncIterator<String>>;
+  user: <T = UserSubscription>() => T;
+  todos: <T = Promise<AsyncIterator<TodoSubscription>>>(args?: {
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TagNullablePromise extends Promise<Tag | null>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  color: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+  todos: <T = FragmentableArray<Todo>>(args?: {
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface TagEdge {
+  node: Tag;
+  cursor: String;
+}
+
+export interface TagEdgePromise extends Promise<TagEdge>, Fragmentable {
+  node: <T = TagPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TagEdgeSubscription
+  extends Promise<AsyncIterator<TagEdge>>,
+    Fragmentable {
+  node: <T = TagSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface User {
+  id: ID_Output;
+  username: String;
+  password: String;
+  name: String;
+  email?: String;
+  permission: Permission;
+  registDate: DateTimeOutput;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  username: () => Promise<String>;
+  password: () => Promise<String>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  permission: () => Promise<Permission>;
+  registDate: () => Promise<DateTimeOutput>;
+  tags: <T = FragmentableArray<Tag>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  todos: <T = FragmentableArray<Todo>>(args?: {
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  notes: <T = FragmentableArray<Note>>(args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  username: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  permission: () => Promise<AsyncIterator<Permission>>;
+  registDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+  tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  todos: <T = Promise<AsyncIterator<TodoSubscription>>>(args?: {
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  notes: <T = Promise<AsyncIterator<NoteSubscription>>>(args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  username: () => Promise<String>;
+  password: () => Promise<String>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  permission: () => Promise<Permission>;
+  registDate: () => Promise<DateTimeOutput>;
+  tags: <T = FragmentableArray<Tag>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  todos: <T = FragmentableArray<Todo>>(args?: {
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  notes: <T = FragmentableArray<Note>>(args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface TodoPreviousValues {
+  id: ID_Output;
+  content: String;
+  createdAt: DateTimeOutput;
+  updatedAt?: DateTimeOutput;
+}
+
+export interface TodoPreviousValuesPromise
+  extends Promise<TodoPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  content: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface TodoPreviousValuesSubscription
+  extends Promise<AsyncIterator<TodoPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  content: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface AggregateNote {
+  count: Int;
+}
+
+export interface AggregateNotePromise
+  extends Promise<AggregateNote>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateNoteSubscription
+  extends Promise<AsyncIterator<AggregateNote>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TodoSubscriptionPayload {
+  mutation: MutationType;
+  node: Todo;
+  updatedFields: String[];
+  previousValues: TodoPreviousValues;
+}
+
+export interface TodoSubscriptionPayloadPromise
+  extends Promise<TodoSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TodoPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TodoPreviousValuesPromise>() => T;
+}
+
+export interface TodoSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TodoSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TodoSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TodoPreviousValuesSubscription>() => T;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface NoteEdge {
+  node: Note;
+  cursor: String;
+}
+
+export interface NoteEdgePromise extends Promise<NoteEdge>, Fragmentable {
+  node: <T = NotePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface NoteEdgeSubscription
+  extends Promise<AsyncIterator<NoteEdge>>,
+    Fragmentable {
+  node: <T = NoteSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BatchPayload {
@@ -472,206 +1611,6 @@ export interface BatchPayloadSubscription
   extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface userPreviousValues {
-  id: ID_Output;
-  username: String;
-  password: String;
-  name?: String;
-  email?: String;
-}
-
-export interface userPreviousValuesPromise
-  extends Promise<userPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  username: () => Promise<String>;
-  password: () => Promise<String>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-}
-
-export interface userPreviousValuesSubscription
-  extends Promise<AsyncIterator<userPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  username: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-}
-
-export interface todoEdge {
-  node: todo;
-  cursor: String;
-}
-
-export interface todoEdgePromise extends Promise<todoEdge>, Fragmentable {
-  node: <T = todoPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface todoEdgeSubscription
-  extends Promise<AsyncIterator<todoEdge>>,
-    Fragmentable {
-  node: <T = todoSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface user {
-  id: ID_Output;
-  username: String;
-  password: String;
-  name?: String;
-  email?: String;
-}
-
-export interface userPromise extends Promise<user>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  username: () => Promise<String>;
-  password: () => Promise<String>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  todos: <T = FragmentableArray<todo>>(args?: {
-    where?: todoWhereInput;
-    orderBy?: todoOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface userSubscription
-  extends Promise<AsyncIterator<user>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  username: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  todos: <T = Promise<AsyncIterator<todoSubscription>>>(args?: {
-    where?: todoWhereInput;
-    orderBy?: todoOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface userNullablePromise
-  extends Promise<user | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  username: () => Promise<String>;
-  password: () => Promise<String>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  todos: <T = FragmentableArray<todo>>(args?: {
-    where?: todoWhereInput;
-    orderBy?: todoOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface todoConnection {
-  pageInfo: PageInfo;
-  edges: todoEdge[];
-}
-
-export interface todoConnectionPromise
-  extends Promise<todoConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<todoEdge>>() => T;
-  aggregate: <T = AggregatetodoPromise>() => T;
-}
-
-export interface todoConnectionSubscription
-  extends Promise<AsyncIterator<todoConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<todoEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatetodoSubscription>() => T;
-}
-
-export interface todoPreviousValues {
-  id: ID_Output;
-  content: String;
-}
-
-export interface todoPreviousValuesPromise
-  extends Promise<todoPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  content: () => Promise<String>;
-}
-
-export interface todoPreviousValuesSubscription
-  extends Promise<AsyncIterator<todoPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  content: () => Promise<AsyncIterator<String>>;
-}
-
-export interface todoSubscriptionPayload {
-  mutation: MutationType;
-  node: todo;
-  updatedFields: String[];
-  previousValues: todoPreviousValues;
-}
-
-export interface todoSubscriptionPayloadPromise
-  extends Promise<todoSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = todoPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = todoPreviousValuesPromise>() => T;
-}
-
-export interface todoSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<todoSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = todoSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = todoPreviousValuesSubscription>() => T;
-}
-
-export interface todo {
-  id: ID_Output;
-  content: String;
-}
-
-export interface todoPromise extends Promise<todo>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  content: () => Promise<String>;
-  author: <T = userPromise>() => T;
-}
-
-export interface todoSubscription
-  extends Promise<AsyncIterator<todo>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  content: () => Promise<AsyncIterator<String>>;
-  author: <T = userSubscription>() => T;
-}
-
-export interface todoNullablePromise
-  extends Promise<todo | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  content: () => Promise<String>;
-  author: <T = userPromise>() => T;
 }
 
 export interface PageInfo {
@@ -697,100 +1636,358 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface Aggregateuser {
-  count: Int;
+export interface Todo {
+  id: ID_Output;
+  content: String;
+  createdAt: DateTimeOutput;
+  updatedAt?: DateTimeOutput;
 }
 
-export interface AggregateuserPromise
-  extends Promise<Aggregateuser>,
+export interface TodoPromise extends Promise<Todo>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  content: () => Promise<String>;
+  tag: <T = TagPromise>() => T;
+  author: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface TodoSubscription
+  extends Promise<AsyncIterator<Todo>>,
     Fragmentable {
-  count: () => Promise<Int>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  content: () => Promise<AsyncIterator<String>>;
+  tag: <T = TagSubscription>() => T;
+  author: <T = UserSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface AggregateuserSubscription
-  extends Promise<AsyncIterator<Aggregateuser>>,
+export interface TodoNullablePromise
+  extends Promise<Todo | null>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  id: () => Promise<ID_Output>;
+  content: () => Promise<String>;
+  tag: <T = TagPromise>() => T;
+  author: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface userEdge {
-  node: user;
+export interface Note {
+  id: ID_Output;
+  title: String;
+  content: String;
+  publish: Boolean;
+  createdAt: DateTimeOutput;
+  updatedAt?: DateTimeOutput;
+}
+
+export interface NotePromise extends Promise<Note>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+  author: <T = UserPromise>() => T;
+  publish: () => Promise<Boolean>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface NoteSubscription
+  extends Promise<AsyncIterator<Note>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<String>>;
+  author: <T = UserSubscription>() => T;
+  publish: () => Promise<AsyncIterator<Boolean>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface NoteNullablePromise
+  extends Promise<Note | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+  author: <T = UserPromise>() => T;
+  publish: () => Promise<Boolean>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface TodoEdge {
+  node: Todo;
   cursor: String;
 }
 
-export interface userEdgePromise extends Promise<userEdge>, Fragmentable {
-  node: <T = userPromise>() => T;
+export interface TodoEdgePromise extends Promise<TodoEdge>, Fragmentable {
+  node: <T = TodoPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface userEdgeSubscription
-  extends Promise<AsyncIterator<userEdge>>,
+export interface TodoEdgeSubscription
+  extends Promise<AsyncIterator<TodoEdge>>,
     Fragmentable {
-  node: <T = userSubscription>() => T;
+  node: <T = TodoSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface Aggregatetodo {
+export interface NoteSubscriptionPayload {
+  mutation: MutationType;
+  node: Note;
+  updatedFields: String[];
+  previousValues: NotePreviousValues;
+}
+
+export interface NoteSubscriptionPayloadPromise
+  extends Promise<NoteSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = NotePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = NotePreviousValuesPromise>() => T;
+}
+
+export interface NoteSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<NoteSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = NoteSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = NotePreviousValuesSubscription>() => T;
+}
+
+export interface AggregateTag {
   count: Int;
 }
 
-export interface AggregatetodoPromise
-  extends Promise<Aggregatetodo>,
+export interface AggregateTagPromise
+  extends Promise<AggregateTag>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregatetodoSubscription
-  extends Promise<AsyncIterator<Aggregatetodo>>,
+export interface AggregateTagSubscription
+  extends Promise<AsyncIterator<AggregateTag>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface userSubscriptionPayload {
-  mutation: MutationType;
-  node: user;
-  updatedFields: String[];
-  previousValues: userPreviousValues;
-}
-
-export interface userSubscriptionPayloadPromise
-  extends Promise<userSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = userPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = userPreviousValuesPromise>() => T;
-}
-
-export interface userSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<userSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = userSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = userPreviousValuesSubscription>() => T;
-}
-
-export interface userConnection {
+export interface UserConnection {
   pageInfo: PageInfo;
-  edges: userEdge[];
+  edges: UserEdge[];
 }
 
-export interface userConnectionPromise
-  extends Promise<userConnection>,
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<userEdge>>() => T;
-  aggregate: <T = AggregateuserPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
 }
 
-export interface userConnectionSubscription
-  extends Promise<AsyncIterator<userConnection>>,
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<userEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateuserSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
+
+export interface TagPreviousValues {
+  id: ID_Output;
+  name: String;
+  color: String;
+  createdAt: DateTimeOutput;
+  updatedAt?: DateTimeOutput;
+}
+
+export interface TagPreviousValuesPromise
+  extends Promise<TagPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  color: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface TagPreviousValuesSubscription
+  extends Promise<AsyncIterator<TagPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  color: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TagSubscriptionPayload {
+  mutation: MutationType;
+  node: Tag;
+  updatedFields: String[];
+  previousValues: TagPreviousValues;
+}
+
+export interface TagSubscriptionPayloadPromise
+  extends Promise<TagSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TagPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TagPreviousValuesPromise>() => T;
+}
+
+export interface TagSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TagSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TagSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TagPreviousValuesSubscription>() => T;
+}
+
+export interface NoteConnection {
+  pageInfo: PageInfo;
+  edges: NoteEdge[];
+}
+
+export interface NoteConnectionPromise
+  extends Promise<NoteConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<NoteEdge>>() => T;
+  aggregate: <T = AggregateNotePromise>() => T;
+}
+
+export interface NoteConnectionSubscription
+  extends Promise<AsyncIterator<NoteConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<NoteEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateNoteSubscription>() => T;
+}
+
+export interface NotePreviousValues {
+  id: ID_Output;
+  title: String;
+  content: String;
+  publish: Boolean;
+  createdAt: DateTimeOutput;
+  updatedAt?: DateTimeOutput;
+}
+
+export interface NotePreviousValuesPromise
+  extends Promise<NotePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+  publish: () => Promise<Boolean>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface NotePreviousValuesSubscription
+  extends Promise<AsyncIterator<NotePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<String>>;
+  publish: () => Promise<AsyncIterator<Boolean>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TodoConnection {
+  pageInfo: PageInfo;
+  edges: TodoEdge[];
+}
+
+export interface TodoConnectionPromise
+  extends Promise<TodoConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TodoEdge>>() => T;
+  aggregate: <T = AggregateTodoPromise>() => T;
+}
+
+export interface TodoConnectionSubscription
+  extends Promise<AsyncIterator<TodoConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TodoEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTodoSubscription>() => T;
+}
+
+export interface AggregateTodo {
+  count: Int;
+}
+
+export interface AggregateTodoPromise
+  extends Promise<AggregateTodo>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTodoSubscription
+  extends Promise<AsyncIterator<AggregateTodo>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+/*
+DateTime scalar input type, allowing Date
+*/
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
@@ -798,12 +1995,6 @@ The `Boolean` scalar type represents `true` or `false`.
 export type Boolean = boolean;
 
 export type Long = string;
-
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number;
-export type ID_Output = string;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
@@ -815,17 +2006,35 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 */
 export type Int = number;
 
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
+
 /**
  * Model Metadata
  */
 
 export const models: Model[] = [
   {
-    name: "todo",
+    name: "User",
     embedded: false
   },
   {
-    name: "user",
+    name: "Todo",
+    embedded: false
+  },
+  {
+    name: "Tag",
+    embedded: false
+  },
+  {
+    name: "Note",
+    embedded: false
+  },
+  {
+    name: "Permission",
     embedded: false
   }
 ];
